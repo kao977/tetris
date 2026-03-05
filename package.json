@@ -1,0 +1,33 @@
+{
+  "name": "tetris",
+  "version": "1.0.0",
+  "description": "Tetris web game built with TDD",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kao977/tetris.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/kao977/tetris/issues"
+  },
+  "homepage": "https://kao977.github.io/tetris",
+  "devDependencies": {
+    "@types/node": "^25.3.3",
+    "jsdom": "^28.1.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vitest": "^4.0.18"
+  }
+}
