@@ -51,7 +51,16 @@ if (!ctx) {
 }
 
 const CELL_SIZE = canvas.width / BOARD_WIDTH;
-const COLORS = ["#000000", "#00e5ff"];
+const COLORS = [
+  "#000000",  // 0: 空白
+  "#00e5ff",  // 1: 青色
+  "#ff00ff",  // 2: 洋紅
+  "#ffff00",  // 3: 黃色
+  "#00ff00",  // 4: 綠色
+  "#ff6600",  // 5: 橙色
+  "#ff0066",  // 6: 粉紅
+  "#6600ff"   // 7: 紫色
+];
 let state: GameState = createInitialState();
 
 function restart(): void {

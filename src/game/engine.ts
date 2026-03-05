@@ -15,6 +15,7 @@ export interface GameState {
   score: number;
   linesCleared: number;
   gameOver: boolean;
+  currentColorIndex: number;
 }
 
 export type RotationDirection = "cw" | "ccw";
@@ -68,7 +69,7 @@ function collides(board: Board, piece: Piece): boolean {
   return false;
 }
 
-function mergePiece(board: Board, piece: Piece): Board {
+function mergePiece(board: Board, piece: Piece, colorIndex: number = 1): Board {
   const nextBoard = board.map((row) => [...row]);
 
   for (let row = 0; row < piece.matrix.length; row += 1) {
@@ -81,7 +82,7 @@ function mergePiece(board: Board, piece: Piece): Board {
       const boardCol = piece.col + col;
 
       if (boardRow >= 0 && boardRow < BOARD_HEIGHT && boardCol >= 0 && boardCol < BOARD_WIDTH) {
-        nextBoard[boardRow][boardCol] = piece.matrix[row][col];
+        nextBoard[boardRow][boardCol] = colorIndex;
       }
     }
   }
@@ -122,7 +123,8 @@ export function createInitialState(): GameState {
     currentPiece: piece,
     score: 0,
     linesCleared: 0,
-    gameOver: false
+    gameOver: false,
+    currentColorIndex: 1
   };
 }
 
@@ -166,16 +168,18 @@ export function tick(state: GameState): GameState {
     return { ...state, currentPiece: fallingPiece };
   }
 
-  const mergedBoard = mergePiece(state.board, state.currentPiece);
+  const mergedBoard = mergePiece(state.board, state.currentPiece, state.currentColorIndex);
   const { board, lines } = clearLines(mergedBoard);
   const spawned = spawnPiece(board);
+  const nextColorIndex = lines > 0 ? (state.currentColorIndex % 7) + 1 : state.currentColorIndex;
 
   return {
     board,
     currentPiece: spawned.piece,
     score: state.score + scoreForLines(lines),
     linesCleared: state.linesCleared + lines,
-    gameOver: spawned.gameOver
+    gameOver: spawned.gameOver,
+    currentColorIndex: nextColorIndex
   };
 }
 
@@ -196,5 +200,5 @@ export function hardDrop(state: GameState): GameState {
 }
 
 export function boardWithPiece(state: GameState): Board {
-  return mergePiece(state.board, state.currentPiece);
+  return mergePiece(state.board, state.currentPiece, state.currentColorIndex);
 }
